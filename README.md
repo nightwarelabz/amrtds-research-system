@@ -130,8 +130,20 @@ Simply open `/home/ckb/amrtds-research-system/index.html` in Firefox or any mode
 | **Inject Jamming** | Click `⚡ INJECT JAMMING` to test high-entropy EW noise response |
 | **Dissimulation Cloak** | Toggle `◆ DISSIMULATION CLOAK` to deploy synthetic ghost decoys |
 | **Target Lock** | Click any target card in the right bay to acquire dynamic lock |
-| **Audio Feedback** | Toggle `🔊 AUDIO` for procedural radar pings, alarms, and purge blasts |
-| **Export Telemetry** | Click `EXPORT JSON DUMP` or `EXPORT CSV DUMP` in the bottom dock |
+---
+
+## 6. SIMULATION VIDEO DEMO & AUDIBLE TELEMETRY
+
+A standalone broadcast-grade MP4 demonstration (`amrtds_simulation_demo.mp4`) is generated using procedural mathematical audio synthesis and real-time canvas rendering:
+- **Audio Frequencies:** 60Hz avionics power carrier, 1420Hz Ka-band radar sweep pings, 2600Hz heterodyne EW jamming whistle.
+- **Audible Control Panel Sounds:** High-tech tactile relays, console mode switches, confirmation beeps.
+- **Tracing & Tracking:** Pulse-Doppler tracking cadence (12 Hz pulse) and escalating two-tone target lock siren (880 Hz / 1760 Hz).
+- **Attack & Elimination:** Anti-Entropy Wavefront sub-bass discharge blast (45 Hz -> 25 Hz), kinetic interceptor rocket ignition roar, and hypersonic kinetic impact detonation.
+
+To re-generate or customize the demo:
+```bash
+python3 generate_amrtds_demo.py
+```
 
 ---
 **RESEARCH-SYSTEM-ONLY**: Strictly For Computational Simulation & Research Analysis.
