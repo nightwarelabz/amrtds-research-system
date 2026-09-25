@@ -1,0 +1,95 @@
+/* ==========================================================================
+   A.M.R.T.D.S. // TELEMETRY DUMP & MEMORY MONITOR STYLING
+   ========================================================================== */
+
+.dump-terminal-pane {
+  position: relative;
+  background: #02070f;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.dump-stream-view {
+  overflow-y: hidden;
+  height: calc(100% - 24px);
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse; /* Keep newest at bottom */
+}
+
+.dump-row-entry {
+  display: grid;
+  grid-template-columns: 85px 75px 120px 1fr;
+  gap: 8px;
+  padding: 1px 0;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.04);
+  font-size: 8px;
+  line-height: 1.25;
+}
+
+.dump-timestamp {
+  color: var(--color-text-dim);
+}
+
+.dump-subsys {
+  color: var(--hud-cyan);
+  font-weight: 700;
+}
+
+.dump-vector-hex {
+  color: #ffb703;
+  letter-spacing: 0.05em;
+}
+
+.dump-payload-txt {
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Event Types in System Dumps */
+.dump-row-entry.type-purge {
+  background: rgba(0, 255, 157, 0.05);
+}
+.dump-row-entry.type-purge .dump-subsys {
+  color: var(--color-friendly);
+}
+
+.dump-row-entry.type-threat {
+  background: rgba(255, 0, 60, 0.07);
+}
+.dump-row-entry.type-threat .dump-subsys {
+  color: var(--color-hostile);
+  font-weight: 800;
+}
+
+.dump-row-entry.type-dissim {
+  background: rgba(224, 64, 251, 0.06);
+}
+.dump-row-entry.type-dissim .dump-subsys {
+  color: var(--color-dissim);
+}
+
+/* Throughput meter indicator */
+.throughput-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-friendly);
+  font-weight: 800;
+}
+
+.throughput-pulse {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-friendly);
+  box-shadow: 0 0 6px var(--color-friendly);
+  animation: pulse-tp 0.8s infinite alternate;
+}
+
+@keyframes pulse-tp {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}

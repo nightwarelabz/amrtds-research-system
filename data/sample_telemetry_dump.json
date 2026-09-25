@@ -1,0 +1,98 @@
+{
+  "system": "A.M.R.T.D.S. // PROJECT CHRONO-VECTOR",
+  "classification": "RESEARCH-SYSTEM-ONLY",
+  "doctrineSpecification": "SPEC-884-HUD",
+  "timescaleModes": ["120s-tactical-locale", "300s-circumnavigation-matrix"],
+  "remnantSubsystem": {
+    "identifier": "REMNANT-AUTONOMOUS-CORE-07",
+    "state": "SOVEREIGN-ARMED",
+    "failSafeProtocol": "AUTONOMOUS-CONTINUITY-V4",
+    "activeDissimulationEngaged": false,
+    "lastEntropyPurgeEpoch": 1727236300000
+  },
+  "cooperativeCircumnavigationArray": [
+    {
+      "id": "CIRC-1: INS-RLG",
+      "designation": "Relativistic Ring-Laser Gyro Inertial",
+      "samplingFrequencyHz": 2000,
+      "driftRateDegHr": 0.00015,
+      "consensusWeight": 0.28,
+      "status": "NOMINAL-SYNC"
+    },
+    {
+      "id": "CIRC-2: STELL-EPHEM",
+      "designation": "Exo-Atmospheric Celestial Star Tracker",
+      "samplingFrequencyHz": 20,
+      "driftRateDegHr": 0.00001,
+      "consensusWeight": 0.26,
+      "status": "NOMINAL-SYNC"
+    },
+    {
+      "id": "CIRC-3: MAG-GRAV",
+      "designation": "Lithospheric Geomagnetic & Gravimetric Gradient",
+      "samplingFrequencyHz": 50,
+      "driftRateDegHr": 0.00020,
+      "consensusWeight": 0.20,
+      "status": "NOMINAL-SYNC"
+    },
+    {
+      "id": "CIRC-4: TERCOM-SAR",
+      "designation": "Terrain Synthetic Aperture Contour Radar",
+      "samplingFrequencyHz": 10,
+      "driftRateDegHr": 0.00008,
+      "consensusWeight": 0.16,
+      "status": "NOMINAL-SYNC"
+    },
+    {
+      "id": "CIRC-5: DISSIM-SWARM",
+      "designation": "Swarm-Relative Ghost Decoy Triangulation",
+      "samplingFrequencyHz": 100,
+      "driftRateDegHr": 0.00040,
+      "consensusWeight": 0.10,
+      "status": "NOMINAL-SYNC"
+    }
+  ],
+  "sampleTelemetryStream": [
+    {
+      "timestamp": "T+00:00.000",
+      "subsystem": "CIRC-CONSENSUS",
+      "hexChecksum": "0x4FA921",
+      "entropyIndex": 0.182,
+      "consensusVariance": 0.00340,
+      "mach": 3.42,
+      "lat": 34.0522,
+      "lon": -118.2437,
+      "altM": 18450,
+      "activeThreats": 2,
+      "activeDissimGhosts": 2
+    },
+    {
+      "timestamp": "T+00:32.418",
+      "subsystem": "ENTROPY-DETECTOR",
+      "hexChecksum": "0xE812B4",
+      "entropyIndex": 0.742,
+      "consensusVariance": 0.00412,
+      "mach": 3.42,
+      "lat": 34.0815,
+      "lon": -118.2120,
+      "altM": 18450,
+      "activeThreats": 2,
+      "activeDissimGhosts": 4,
+      "warning": "CRITICAL_ENTROPY_SURGE_DETECTED"
+    },
+    {
+      "timestamp": "T+00:66.890",
+      "subsystem": "REMNANT-PURGE",
+      "hexChecksum": "0x00FF88",
+      "entropyIndex": 0.120,
+      "consensusVariance": 0.00298,
+      "mach": 3.45,
+      "lat": 34.1204,
+      "lon": -118.1742,
+      "altM": 18450,
+      "activeThreats": 2,
+      "activeDissimGhosts": 0,
+      "event": "ANTI_ENTROPY_WAVEFRONT_DISCHARGE_SUCCESSFUL"
+    }
+  ]
+}

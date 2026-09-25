@@ -1,0 +1,124 @@
+/* ==========================================================================
+   A.M.R.T.D.S. // TACTICAL GRID & RETICLE OVERLAYS (SPEC-884-HUD)
+   ========================================================================== */
+
+/* Spherical Geodesic Grid HUD Markers */
+.hud-target-label {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transform: translate(-50%, -100%);
+  transition: transform 0.05s ease-out;
+}
+
+.hud-target-label .target-box {
+  border: 1px solid var(--hud-cyan);
+  padding: 1px 3px;
+  background: rgba(0, 15, 25, 0.7);
+  white-space: nowrap;
+}
+
+.hud-target-label.hostile .target-box {
+  border-color: var(--color-hostile);
+  color: #ff476d;
+  background: rgba(25, 0, 5, 0.85);
+  box-shadow: var(--color-hostile-glow);
+}
+
+.hud-target-label.friendly .target-box {
+  border-color: var(--color-friendly);
+  color: var(--color-friendly);
+}
+
+.hud-target-label.dissim .target-box {
+  border-color: var(--color-dissim);
+  color: #f06292;
+  box-shadow: var(--color-dissim-glow);
+  border-style: dashed;
+}
+
+/* Dynamic Elimination Shockwave Ring in Canvas Overlay */
+@keyframes wavefront-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.05);
+    opacity: 1;
+    border-width: 4px;
+  }
+  70% {
+    opacity: 0.85;
+    border-width: 2px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+.elimination-wave-fx {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--hud-cyan);
+  box-shadow: 0 0 35px var(--hud-cyan), inset 0 0 25px var(--hud-cyan);
+  pointer-events: none;
+  animation: wavefront-expand 1.4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+/* Artificial Horizon Pitch Ladder */
+.pitch-ladder-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.pitch-rung {
+  position: absolute;
+  width: 40px;
+  height: 1px;
+  background: var(--hud-cyan);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pitch-rung::before, .pitch-rung::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 6px;
+  background: var(--hud-cyan);
+}
+.pitch-rung::before { left: 0; bottom: 0; }
+.pitch-rung::after { right: 0; bottom: 0; }
+
+.pitch-rung.rung-pos-10 { top: 35%; }
+.pitch-rung.rung-zero { top: 50%; width: 70px; background: rgba(0, 240, 255, 0.8); }
+.pitch-rung.rung-neg-10 { top: 65%; }
+
+/* Dynamic Target Lock Diamond */
+@keyframes lock-rotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.active-lock-reticle {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border: 1px dashed var(--color-hostile);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: lock-rotate 8s linear infinite;
+  box-shadow: 0 0 10px rgba(255, 0, 60, 0.4);
+}

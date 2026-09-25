@@ -1,0 +1,24 @@
+{
+  "name": "amrtds-research-system",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Automated Military Radar Targeting & Dissimulation System (AMRTDS) Visual Containment HUD & Sovereign Remnant Engine",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 launch_system.py",
+    "serve": "npx serve -l 8088 ."
+  },
+  "keywords": [
+    "amrtds",
+    "radar",
+    "targeting",
+    "dissimulation",
+    "military-robotics",
+    "circumnavigation",
+    "hud",
+    "entropy-elimination",
+    "research-system-only"
+  ],
+  "author": "Antigravity Research Labs",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A.M.R.T.D.S. // AUTOMATED RADAR TARGETING & DISSIMULATION HUD</title>
+  <link rel="stylesheet" href="src/css/amrtds-hud.css">
+  <link rel="stylesheet" href="src/css/tactical-grid.css">
+  <link rel="stylesheet" href="src/css/telemetry-dump.css">
+</head>
+<body>
+
+  <!-- BACKGROUND WATERMARK: RESEARCH-SYSTEM-ONLY -->
+  <div class="splash-watermark-overlay">RESEARCH-SYSTEM-ONLY</div>
+
+  <!-- TOP CLASSIFICATION & DOCTRINE BAR -->
+  <header class="hud-classification-bar">
+    <div class="classification-tag">
+      <span class="badge-research">RESEARCH-SYSTEM-ONLY</span>
+      <span>RESTRICTED // SPEC-884-HUD // DARPA-AMRTDS</span>
+    </div>
+    <div class="system-spec-id">
+      SUBSYSTEM: REMNANT-AUTONOMOUS-CORE-07 // ORBITAL-7
+    </div>
+    <div class="remnant-status-indicator" id="remnant-indicator-wrap">
+      <div class="core-dot"></div>
+      <span id="remnant-state-text">REMNANT: SOVEREIGN ARMED</span>
+      <span style="color: var(--color-text-dim); margin: 0 4px;">|</span>
+      <span id="hud-fps-val" style="color: var(--hud-cyan); font-weight: 700;">60 FPS</span>
+    </div>
+  </header>
+
+  <!-- MASTER VIEWPORT CONTAINER -->
+  <div class="amrtds-viewport-container">
+
+    <!-- MASTER HUD HEADER & DUAL TIMELINE SCRUBBER -->
+    <section class="hud-header">
+      <div class="system-title-block">
+        <h1>A.M.R.T.D.S. <span>// VECTOR-SYNC</span></h1>
+        <div class="system-subtitle">AUTOMATED RADAR TARGETING & DISSIMULATION SYSTEM</div>
+      </div>
+
+      <!-- TIMELINE SCRUBBER BAR (120s / 300s) -->
+      <div class="timeline-master-bar">
+        <div class="timeline-upper-row">
+          <div class="timeline-controls">
+            <button class="btn-tactical" id="btn-timeline-play">&#10074;&#10074; PAUSE</button>
+            <div class="time-readout">
+              <span id="time-readout-current">T+00:00.00</span>
+              <span class="time-max" id="time-readout-max">T_MAX: 02:00.00</span>
+            </div>
+            <button class="btn-tactical active" id="btn-time-120">120S LOCALE</button>
+            <button class="btn-tactical" id="btn-time-300">300S (5-MIN) MATRIX</button>
+          </div>
+          <div style="font-size: 8.5px; color: var(--hud-cyan); font-weight: 700;" id="timeline-phase-label">
+            PHASE I: INGRESS & COOPERATIVE SYNC
+          </div>
+        </div>
+
+        <div class="timeline-slider-wrap">
+          <input type="range" class="timeline-scrubber" id="timeline-scrubber" min="0" max="100" value="0" step="0.1">
+        </div>
+      </div>
+
+      <!-- HEADER QUICK ACTIONS -->
+      <div class="hud-header-actions">
+        <button class="btn-tactical" id="btn-toggle-audio">&#128263; AUDIO: MUTED</button>
+        <button class="btn-tactical btn-dissim" id="btn-toggle-dissim">&#9670; DISSIMULATION CLOAK</button>
+        <button class="btn-tactical" id="btn-open-charter">&#9776; REMNANT SPEC</button>
+      </div>
+    </section>
+
+    <!-- MAIN 3-COLUMN TACTICAL DISPLAY -->
+    <main class="amrtds-main-grid">
+
+      <!-- LEFT COLUMN: COOPERATIVE CIRCUMNAVIGATION & REMNANT -->
+      <aside class="left-sidebar-stack">
+
+        <!-- KINEMATIC TELEMETRY PANEL -->
+        <div class="hud-panel" style="flex: 0 0 auto;">
+          <div class="hud-panel-header">
+            <span>PLATFORM KINEMATICS</span>
+            <span style="color: var(--color-friendly);">ACTIVE-CRUISE</span>
+          </div>
+          <div class="hud-panel-body" style="padding: 6px 8px;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; text-align: center;">
+              <div class="stat-item">
+                <span class="stat-label">MACH</span>
+                <span class="stat-value" id="kin-mach">M 3.42</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">ALTITUDE</span>
+                <span class="stat-value" id="kin-alt">18,450 m</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">HEADING</span>
+                <span class="stat-value" id="kin-heading">142.6°</span>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 8.5px; color: var(--color-text-muted);">
+              <span>POS: <b id="kin-lat" style="color: var(--hud-cyan);">34.0522°N</b>, <b id="kin-lon" style="color: var(--hud-cyan);">118.2437°W</b></span>
+              <span>GRID: <b style="color: #fff;">WGS-84/GEO</b></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5X COOPERATIVE CIRCUMNAVIGATION ENGINES -->
+        <div class="hud-panel" style="flex: 1;">
+          <div class="hud-panel-header">
+            <span>COOPERATIVE CIRCUMNAV (x5)</span>
+            <span style="color: var(--hud-cyan);">FUSED-CONSENSUS</span>
+          </div>
+          <div class="hud-panel-body">
+            <div class="circumnav-module-list">
+
+              <!-- CIRC-1: INS-RLG -->
+              <div class="circumnav-card nominal">
+                <div class="circ-header-row">
+                  <span class="circ-id">CIRC-1: INS-RLG (Relativistic Ring Laser)</span>
+                  <span class="circ-status-badge badge-sync" id="circ-0-stat">SYNC</span>
+                </div>
+                <div class="circ-telemetry-row">
+                  <span>DRIFT: <b id="circ-0-err">±0.42m</b></span>
+                  <span>WEIGHT: <b id="circ-0-wt">28.0%</b></span>
+                </div>
+                <div class="circ-bar-wrap">
+                  <div class="circ-bar-fill" id="circ-0-bar" style="width: 28%;"></div>
+                </div>
+              </div>
+
+              <!-- CIRC-2: STELL-EPHEM -->
+              <div class="circumnav-card nominal">
+                <div class="circ-header-row">
+                  <span class="circ-id">CIRC-2: STELL-EPHEM (Star Ephemeris)</span>
+                  <span class="circ-status-badge badge-sync" id="circ-1-stat">SYNC</span>
+                </div>
+                <div class="circ-telemetry-row">
+                  <span>DRIFT: <b id="circ-1-err">±0.18m</b></span>
+                  <span>WEIGHT: <b id="circ-1-wt">26.0%</b></span>
+                </div>
+                <div class="circ-bar-wrap">
+                  <div class="circ-bar-fill" id="circ-1-bar" style="width: 26%;"></div>
+                </div>
+              </div>
+
+              <!-- CIRC-3: MAG-GRAV -->
+              <div class="circumnav-card nominal">
+                <div class="circ-header-row">
+                  <span class="circ-id">CIRC-3: MAG-GRAV (Crustal Anomaly)</span>
+                  <span class="circ-status-badge badge-sync" id="circ-2-stat">SYNC</span>
+                </div>
+                <div class="circ-telemetry-row">
+                  <span>DRIFT: <b id="circ-2-err">±0.95m</b></span>
+                  <span>WEIGHT: <b id="circ-2-wt">20.0%</b></span>
+                </div>
+                <div class="circ-bar-wrap">
+                  <div class="circ-bar-fill" id="circ-2-bar" style="width: 20%;"></div>
+                </div>
+              </div>
+
+              <!-- CIRC-4: TERCOM-SAR -->
+              <div class="circumnav-card nominal">
+                <div class="circ-header-row">
+                  <span class="circ-id">CIRC-4: TERCOM-SAR (Contour Radar)</span>
+                  <span class="circ-status-badge badge-sync" id="circ-3-stat">SYNC</span>
+                </div>
+                <div class="circ-telemetry-row">
+                  <span>DRIFT: <b id="circ-3-err">±0.28m</b></span>
+                  <span>WEIGHT: <b id="circ-3-wt">16.0%</b></span>
+                </div>
+                <div class="circ-bar-wrap">
+                  <div class="circ-bar-fill" id="circ-3-bar" style="width: 16%;"></div>
+                </div>
+              </div>
+
+              <!-- CIRC-5: DISSIM-SWARM -->
+              <div class="circumnav-card nominal">
+                <div class="circ-header-row">
+                  <span class="circ-id">CIRC-5: DISSIM-SWARM (Ghost Vector)</span>
+                  <span class="circ-status-badge badge-sync" id="circ-4-stat">SYNC</span>
+                </div>
+                <div class="circ-telemetry-row">
+                  <span>DRIFT: <b id="circ-4-err">±1.10m</b></span>
+                  <span>WEIGHT: <b id="circ-4-wt">10.0%</b></span>
+                </div>
+                <div class="circ-bar-wrap">
+                  <div class="circ-bar-fill" id="circ-4-bar" style="width: 10%;"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- KALMAN CONSENSUS MATRIX SUMMARY -->
+            <div class="kalman-consensus-block">
+              <div style="font-size: 8px; color: var(--hud-cyan); font-weight: 700; text-transform: uppercase;">
+                KALMAN-BUCY CONSENSUS INTEGRITY
+              </div>
+              <div class="consensus-stats">
+                <div class="stat-item">
+                  <span class="stat-label">COVARIANCE VAR</span>
+                  <span class="stat-value" id="consensus-variance">0.00340</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">CONSENSUS LOCK</span>
+                  <span class="stat-value" id="consensus-integrity">99.88%</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- REMNANT SOVEREIGN CORE MONITOR -->
+        <div class="hud-panel remnant-core-panel" style="flex: 0 0 170px;">
+          <div class="hud-panel-header">
+            <span>THE REMNANT (SOVEREIGN CORE)</span>
+            <span class="circ-status-badge badge-sync" id="remnant-state-badge">STANDBY-SURVEILLANCE</span>
+          </div>
+          <div class="hud-panel-body" style="display: flex; flex-direction: column;">
+            <div class="remnant-mandate-card">
+              <div class="remnant-mandate-title">MANDATE: FAIL-SAFE AUTONOMOUS STEWARDSHIP</div>
+              <div style="font-size: 8px; color: var(--color-text-muted);">
+                Auto-purge entropy spikes > 0.78 | Dissimulate swarm ghost vectors on threat lock.
+              </div>
+            </div>
+            <div class="remnant-log-feed" id="remnant-log-feed">
+              <!-- Logs populated by RemnantCore.js -->
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- CENTER COLUMN: FRONTAL GLOBE RADAR TARGETING HUD -->
+      <section class="center-viewport-panel">
+        <div class="hud-canvas-container">
+          <canvas id="frontal-globe-canvas"></canvas>
+
+          <!-- OVERLAID HUD TACTICAL ELEMENTS -->
+          <div class="canvas-hud-overlay">
+            <div class="hud-bearing-tape">HDG 142° // ELEV +02° // RADAR: 360° SPHERICAL</div>
+            <div class="hud-view-mode-tag">MODE: 3D GEODESIC PROJECTION</div>
+
+            <div class="hud-range-rings-indicator">
+              <span>SCAN RAD: 300 KM</span>
+              <span>AZIMUTH: 360° COOP</span>
+              <span>BEAM: KA-BAND PULSED</span>
+            </div>
+
+            <!-- Artificial Horizon Pitch Ladder -->
+            <div class="pitch-ladder-container">
+              <div class="pitch-rung rung-pos-10"></div>
+              <div class="pitch-rung rung-zero"></div>
+              <div class="pitch-rung rung-neg-10"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: ENTROPY DETECTION & THREAT ALLEGIANCE -->
+      <aside class="right-sidebar-stack">
+
+        <!-- DYNAMIC ENTROPY SIGNAL DETECTION & ELIMINATION -->
+        <div class="hud-panel entropy-engine-panel" style="flex: 0 0 210px;">
+          <div class="hud-panel-header">
+            <span>ENTROPY SIGNAL DETECTION</span>
+            <span style="color: var(--hud-cyan);">SHANNON-ECCM</span>
+          </div>
+          <div class="hud-panel-body">
+            <div class="entropy-meter-wrap">
+              <div class="entropy-meter-header">
+                <span>SPECTRAL CHAOS FLUX (H_dyn)</span>
+                <span class="entropy-val-highlight" id="entropy-val-display">22.0%</span>
+              </div>
+              <div class="entropy-progress-bar">
+                <div class="entropy-progress-fill" id="entropy-bar-fill"></div>
+              </div>
+            </div>
+
+            <!-- Real-time Oscilloscope Waveform -->
+            <div class="waveform-canvas-box">
+              <canvas id="entropy-waveform-canvas"></canvas>
+            </div>
+
+            <!-- Elimination & Jamming Action Buttons -->
+            <div class="entropy-action-row">
+              <button class="btn-tactical btn-danger" id="btn-fire-purge">&#9733; PURGE WAVEFRONT</button>
+              <button class="btn-tactical" id="btn-inject-entropy">&#9889; INJECT JAMMING</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- THREAT & ALLEGIANCE REGISTRY (IFF MODE-5) -->
+        <div class="hud-panel allegiance-panel">
+          <div class="hud-panel-header">
+            <span>ALLEGIANCE & THREAT MATRIX</span>
+            <span style="color: var(--hud-cyan);">IFF MODE-5</span>
+          </div>
+          <div class="hud-panel-body" style="display: flex; flex-direction: column;">
+            
+            <!-- Filters -->
+            <div class="allegiance-filters">
+              <button class="filter-btn active" data-filter="ALL">ALL</button>
+              <button class="filter-btn" data-filter="HOSTILE" style="color: #ff3b68;">HOSTILE</button>
+              <button class="filter-btn" data-filter="FRIENDLY" style="color: #00ff9d;">FRIENDLY</button>
+              <button class="filter-btn" data-filter="DISSIM" style="color: #e040fb;">DISSIM</button>
+              <button class="filter-btn" data-filter="NEUTRAL" style="color: #ffb703;">NEUTRAL</button>
+            </div>
+
+            <!-- Target Cards -->
+            <div class="target-track-list" id="target-track-list">
+              <!-- Dynamically populated by ThreatAllegianceMatrix.js -->
+            </div>
+
+          </div>
+        </div>
+
+      </aside>
+
+    </main>
+
+    <!-- BOTTOM DOCK: BLAZINGLY FAST SYSTEM DUMPS & BENCHMARK TERMINAL -->
+    <footer class="bottom-dock-container">
+
+      <!-- SYSTEM DUMPS STREAM TERMINAL -->
+      <div class="dump-terminal-pane">
+        <div class="dump-header">
+          <span class="dump-badge">LIVE OPTICAL REGISTERS // MICROSECOND TELEMETRY DUMP</span>
+          <div class="dump-stats">
+            <span class="throughput-badge"><div class="throughput-pulse"></div> STREAMING</span>
+            <span>RATE: <b id="dump-rate-val">12,480 vec/s</b></span>
+            <span>LATENCY: <b id="dump-latency-val">0.08 ms</b></span>
+            <span>BUFFER: <b id="buffer-util-val">12.4%</b></span>
+          </div>
+        </div>
+        <div class="dump-stream-view" id="dump-stream-terminal">
+          <!-- Real-time rolling microsecond telemetry lines inserted here -->
+        </div>
+      </div>
+
+      <!-- RESEARCH CONTROLS & EXPORT DECK -->
+      <div class="dump-control-deck">
+        <div class="deck-metrics-grid">
+          <div class="metric-cell">
+            <div class="metric-val">120s / 300s</div>
+            <div class="metric-label">TIMESCALE</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val">5x COOP</div>
+            <div class="metric-label">CIRCUMNAV</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-val">0.0034</div>
+            <div class="metric-label">KALMAN VAR</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 4px; justify-content: center;">
+          <button class="btn-tactical btn-speed-mult" data-speed="0.5">0.5x</button>
+          <button class="btn-tactical btn-speed-mult active" data-speed="1.0">1.0x</button>
+          <button class="btn-tactical btn-speed-mult" data-speed="2.0">2.0x</button>
+          <button class="btn-tactical btn-speed-mult" data-speed="4.0">4.0x</button>
+        </div>
+
+        <div class="deck-btn-group">
+          <button class="btn-tactical" id="btn-export-json">&#128190; EXPORT JSON DUMP</button>
+          <button class="btn-tactical" id="btn-export-csv">&#128196; EXPORT CSV DUMP</button>
+        </div>
+      </div>
+
+    </footer>
+
+  </div>
+
+  <!-- RESEARCH SPECIFICATION MODAL -->
+  <div class="modal-backdrop" id="research-modal-backdrop">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2>A.M.R.T.D.S. // RESEARCH ARCHITECTURAL SPECIFICATION</h2>
+        <button class="modal-close-btn" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-content-body">
+        <p><strong>DESIGNATION:</strong> Automated Military Radar Targeting & Dissimulation System (AMRTDS)</p>
+        <p><strong>CLASSIFICATION:</strong> RESTRICTED // RESEARCH-SYSTEM-ONLY</p>
+        <p><strong>THE REMNANT RESPONSIBILITY:</strong> The Remnant is the sovereign autonomous black-box fail-safe core. When telemetry or command links are severed, the Remnant assumes unilateral operational stewardship to maintain circumnavigation continuity, deploy active phantom decoy signatures, and fire dynamic entropy elimination wavefronts to neutralize DRFM radar spoofing.</p>
+        <pre>
+COOPERATIVE CIRCUMNAVIGATION CONSENSUS FORMULA:
+x_consensus = SUM_i [ w_i * x_i ]
+w_i = ( Tr(P_i) + lambda * Entropy_i )^-1 / SUM_j [ ( Tr(P_j) + lambda * Entropy_j )^-1 ]
+        </pre>
+        <p><strong>5X COOPERATIVE SUBSYSTEMS:</strong></p>
+        <ul>
+          <li><strong>INS-RLG:</strong> Relativistic Ring-Laser Gyro Inertial Dead-Reckoning (2,000 Hz)</li>
+          <li><strong>STELL-EPHEM:</strong> Exo-Atmospheric Celestial Star Tracker (20 Hz)</li>
+          <li><strong>MAG-GRAV:</strong> Lithospheric Geomagnetic & Gravimetric Gradient Lock (50 Hz)</li>
+          <li><strong>TERCOM-SAR:</strong> Topographic Synthetic Aperture Contour Radar (10 Hz)</li>
+          <li><strong>DISSIM-SWARM:</strong> Swarm-Relative Ghost Decoy Triangulation (100 Hz)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
